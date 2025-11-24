@@ -1,0 +1,12 @@
+# Ignorar dados do Postgres
+postgres_data/
+
+# Ignorar certificados (se não quiser subir para o GitHub)
+certs/
+
+# Ignorar arquivos temporários
+*.log
+
+#Ignorar arquivos com as credenciais do meu Banco de Dados
+.env
+
