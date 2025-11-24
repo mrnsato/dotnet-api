@@ -88,11 +88,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/melsantos/code/dotnet/src/src.csproj",
-      "projectName": "src",
-      "projectPath": "/home/melsantos/code/dotnet/src/src.csproj",
+      "projectUniqueName": "/home/melsantos/code/dotnet-api/src/dotnet-api.csproj",
+      "projectName": "dotnet-api",
+      "projectPath": "/home/melsantos/code/dotnet-api/src/dotnet-api.csproj",
       "packagesPath": "/home/melsantos/.nuget/packages/",
-      "outputPath": "/home/melsantos/code/dotnet/src/obj/",
+      "outputPath": "/home/melsantos/code/dotnet-api/src/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/melsantos/.nuget/NuGet/NuGet.Config"
