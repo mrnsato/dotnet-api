@@ -1,0 +1,30 @@
+-- Criação da tabela Technologies
+CREATE TABLE Technologies (
+    ID SERIAL PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL
+);
+
+-- Criação da tabela Versions
+CREATE TABLE Versions (
+    ID SERIAL PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    technologies_id INT REFERENCES Technologies(ID),
+    Standard BOOLEAN,
+    full_name VARCHAR(100) NOT NULL,
+    EOS DATE,
+    EOL DATE
+);
+
+-- Criação da tabela Applications
+CREATE TABLE Applications (
+    ID SERIAL PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    active BOOLEAN
+);
+
+-- Criação da tabela de associação Applications_Versions
+CREATE TABLE Applications_Versions (
+    ID SERIAL PRIMARY KEY,
+    application_id INT REFERENCES Applications(ID),
+    version_id INT REFERENCES Versions(ID)
+);
