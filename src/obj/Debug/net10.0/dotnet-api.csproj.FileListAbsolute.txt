@@ -1,0 +1,9 @@
+/home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.csproj.AssemblyReference.cache
+/home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/rpswa.dswa.cache.json
+/home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.GeneratedMSBuildEditorConfig.editorconfig
+/home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.AssemblyInfoInputs.cache
+/home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.AssemblyInfo.cs
+/home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.csproj.CoreCompileInputs.cache
+/home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.MvcApplicationPartsAssemblyInfo.cs
+/home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.MvcApplicationPartsAssemblyInfo.cache
+/home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.sourcelink.json
