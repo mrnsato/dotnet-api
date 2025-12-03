@@ -17,19 +17,19 @@ public static class ApplicationVersionsEndpoints
             var appVersions = await db.ApplicationVersions
                 .Include(av => av.Application)
                 .Include(av => av.Version)
-                .Select(av => new ApplicationVersionDto(
-                    av.Id,
-                    av.ApplicationId,
-                    av.VersionId,
-                    av.Application.Name,
-                    av.Version.FullName
-                ))
+                .Select(av => new ApplicationVersionDto()
+                    {
+                        Id = av.Id,
+                        ApplicationId = av.ApplicationId,
+                        VersionId = av.VersionId,
+                        ApplicationName = av.Application.Name,
+                        VersionName = av.Version.FullName
+                    }
+                )
                 .ToListAsync();
             
             return Results.Ok(appVersions);
-        })
-        .WithName("GetAllApplicationVersions")
-        .Produces<List<ApplicationVersionDto>>(StatusCodes.Status200OK);
+        });
 
         // GET: Buscar por ID
         group.MapGet("/{id}", async (int id, AppDbContext db) =>
@@ -42,19 +42,17 @@ public static class ApplicationVersionsEndpoints
             if (appVersion == null)
                 return Results.NotFound(new { message = "Associação não encontrada" });
             
-            var dto = new ApplicationVersionDto(
-                appVersion.Id,
-                appVersion.ApplicationId,
-                appVersion.VersionId,
-                appVersion.Application.Name,
-                appVersion.Version.FullName
-            );
+            var dto = new ApplicationVersionDto()
+                {
+                    Id = appVersion.Id,
+                    ApplicationId = appVersion.ApplicationId,
+                    VersionId = appVersion.VersionId,
+                    ApplicationName = appVersion.Application.Name,
+                    VersionName = appVersion.Version.FullName
+                };
             
             return Results.Ok(dto);
-        })
-        .WithName("GetApplicationVersionById")
-        .Produces<ApplicationVersionDto>(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status404NotFound);
+        });
 
         // GET: Buscar versões de uma aplicação
         group.MapGet("/application/{applicationId}", async (int applicationId, AppDbContext db) =>
@@ -64,19 +62,19 @@ public static class ApplicationVersionsEndpoints
                 .Include(av => av.Version)
                     .ThenInclude(v => v.Technology)
                 .Where(av => av.ApplicationId == applicationId)
-                .Select(av => new ApplicationVersionDto(
-                    av.Id,
-                    av.ApplicationId,
-                    av.VersionId,
-                    av.Application.Name,
-                    av.Version.FullName
-                ))
-                .ToListAsync();
+                .Select(av => new ApplicationVersionDto()
+                    {
+                        Id = av.Id,
+                        ApplicationId = av.ApplicationId,
+                        VersionId = av.VersionId,
+                        ApplicationName = av.Application.Name,
+                        VersionName = $"{av.Version.Technology.Name} {av.Version.FullName}"
+                    }
+                )
+                        .ToListAsync();
             
             return Results.Ok(appVersions);
-        })
-        .WithName("GetVersionsByApplication")
-        .Produces<List<ApplicationVersionDto>>(StatusCodes.Status200OK);
+        });
 
         // GET: Buscar aplicações que usam uma versão
         group.MapGet("/version/{versionId}", async (int versionId, AppDbContext db) =>
@@ -85,22 +83,22 @@ public static class ApplicationVersionsEndpoints
                 .Include(av => av.Application)
                 .Include(av => av.Version)
                 .Where(av => av.VersionId == versionId)
-                .Select(av => new ApplicationVersionDto(
-                    av.Id,
-                    av.ApplicationId,
-                    av.VersionId,
-                    av.Application.Name,
-                    av.Version.FullName
-                ))
+                .Select(av => new ApplicationVersionDto()
+                    {
+                        Id = av.Id,
+                        ApplicationId = av.ApplicationId,
+                        VersionId = av.VersionId,
+                        ApplicationName = av.Application.Name,
+                        VersionName = av.Version.FullName
+                    }                
+                )
                 .ToListAsync();
             
             return Results.Ok(appVersions);
-        })
-        .WithName("GetApplicationsByVersion")
-        .Produces<List<ApplicationVersionDto>>(StatusCodes.Status200OK);
+        });
 
         // POST: Criar nova associação
-        group.MapPost("/", async (CreateApplicationVersionDto dto, AppDbContext db) =>
+        group.MapPost("/", async (ApplicationVersionDto dto, AppDbContext db) =>
         {
             var application = await db.Applications.FindAsync(dto.ApplicationId);
             if (application == null)
@@ -126,19 +124,17 @@ public static class ApplicationVersionsEndpoints
             db.ApplicationVersions.Add(appVersion);
             await db.SaveChangesAsync();
             
-            var result = new ApplicationVersionDto(
-                appVersion.Id,
-                appVersion.ApplicationId,
-                appVersion.VersionId,
-                application.Name,
-                version.FullName
-            );
+            var result = new ApplicationVersionDto()
+                {
+                    Id = appVersion.Id,
+                    ApplicationId = appVersion.ApplicationId,
+                    VersionId = appVersion.VersionId,
+                    ApplicationName = application.Name,
+                    VersionName = version.FullName
+                };
             
             return Results.Created($"/api/application-versions/{appVersion.Id}", result);
-        })
-        .WithName("CreateApplicationVersion")
-        .Produces<ApplicationVersionDto>(StatusCodes.Status201Created)
-        .Produces(StatusCodes.Status400BadRequest);
+        });
 
         // DELETE: Remover associação
         group.MapDelete("/{id}", async (int id, AppDbContext db) =>
@@ -152,9 +148,6 @@ public static class ApplicationVersionsEndpoints
             await db.SaveChangesAsync();
             
             return Results.NoContent();
-        })
-        .WithName("DeleteApplicationVersion")
-        .Produces(StatusCodes.Status204NoContent)
-        .Produces(StatusCodes.Status404NotFound);
+        });
     }
 }

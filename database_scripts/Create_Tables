@@ -1,30 +1,30 @@
--- Criação da tabela Technologies
-CREATE TABLE Technologies (
-    ID SERIAL PRIMARY KEY,
-    Name VARCHAR(50) NOT NULL
+-- criação da tabela technologies
+create table technologies (
+    id serial primary key,
+    name varchar(50) not null
 );
 
--- Criação da tabela Versions
-CREATE TABLE Versions (
-    ID SERIAL PRIMARY KEY,
-    Name VARCHAR(50) NOT NULL,
-    technologies_id INT REFERENCES Technologies(ID),
-    Standard BOOLEAN,
-    full_name VARCHAR(100) NOT NULL,
-    EOS DATE,
-    EOL DATE
+-- criação da tabela versions
+create table versions (
+    id serial primary key,
+    name varchar(50) not null,
+    technologies_id int references technologies(id),
+    standard boolean,
+    full_name varchar(100) not null,
+    eos date,
+    eol date
 );
 
--- Criação da tabela Applications
-CREATE TABLE Applications (
-    ID SERIAL PRIMARY KEY,
-    Name VARCHAR(50) NOT NULL,
-    active BOOLEAN
+-- criação da tabela applications
+create table applications (
+    id serial primary key,
+    name varchar(50) not null,
+    active boolean
 );
 
--- Criação da tabela de associação Applications_Versions
-CREATE TABLE Applications_Versions (
-    ID SERIAL PRIMARY KEY,
-    application_id INT REFERENCES Applications(ID),
-    version_id INT REFERENCES Versions(ID)
+-- criação da tabela de associação applications_versions
+create table applications_versions (
+    id serial primary key,
+    application_id int references applications(id),
+    version_id int references versions(id)
 );

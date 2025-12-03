@@ -9,19 +9,22 @@ public static class TechnologiesEndpoints
 {
     public static void MapTechnologiesEndpoints(this WebApplication app)
     {
-        var group = app.MapGroup("/api/technologies").WithTags("Technologies");
+        var group = app.MapGroup("/api/technology").WithTags("Technologies");
 
         // GET: Listar todas as tecnologias
         group.MapGet("/", async (AppDbContext db) =>
         {
             var technologies = await db.Technologies
-                .Select(t => new TechnologyDto(t.Id, t.Name))
+                .Select(t => new TechnologyDto()
+                    {
+                        Id = t.Id,
+                        Name = t.Name
+                    }
+                )
                 .ToListAsync();
             
             return Results.Ok(technologies);
-        })
-        .WithName("GetAllTechnologies")
-        .Produces<List<TechnologyDto>>(StatusCodes.Status200OK);
+        });
 
         // GET: Buscar tecnologia por ID
         group.MapGet("/{id}", async (int id, AppDbContext db) =>
@@ -31,28 +34,33 @@ public static class TechnologiesEndpoints
             if (technology == null)
                 return Results.NotFound(new { message = "Tecnologia não encontrada" });
             
-            return Results.Ok(new TechnologyDto(technology.Id, technology.Name));
-        })
-        .WithName("GetTechnologyById")
-        .Produces<TechnologyDto>(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status404NotFound);
+            return Results.Ok(new TechnologyDto()
+                {
+                    Id = technology.Id,
+                    Name = technology.Name
+                }
+            );
+        });
 
         // POST: Criar nova tecnologia
-        group.MapPost("/", async (CreateTechnologyDto dto, AppDbContext db) =>
+        group.MapPost("/", async (TechnologyDto dto, AppDbContext db) =>
         {
             var technology = new Technology { Name = dto.Name };
             
             db.Technologies.Add(technology);
             await db.SaveChangesAsync();
             
-            var result = new TechnologyDto(technology.Id, technology.Name);
+            var result = new TechnologyDto()
+                {
+                    Id = technology.Id,
+                    Name = technology.Name
+                }
+            ;
             return Results.Created($"/api/technologies/{technology.Id}", result);
-        })
-        .WithName("CreateTechnology")
-        .Produces<TechnologyDto>(StatusCodes.Status201Created);
+        });
 
         // PUT: Atualizar tecnologia
-        group.MapPut("/{id}", async (int id, UpdateTechnologyDto dto, AppDbContext db) =>
+        group.MapPut("/{id}", async (int id, TechnologyDto dto, AppDbContext db) =>
         {
             var technology = await db.Technologies.FindAsync(id);
             
@@ -62,11 +70,13 @@ public static class TechnologiesEndpoints
             technology.Name = dto.Name;
             await db.SaveChangesAsync();
             
-            return Results.Ok(new TechnologyDto(technology.Id, technology.Name));
-        })
-        .WithName("UpdateTechnology")
-        .Produces<TechnologyDto>(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status404NotFound);
+            return Results.Ok(new TechnologyDto()
+                {
+                    Id = technology.Id,
+                    Name = technology.Name
+                }
+            );
+        });
 
         // DELETE: Remover tecnologia
         group.MapDelete("/{id}", async (int id, AppDbContext db) =>
@@ -80,9 +90,6 @@ public static class TechnologiesEndpoints
             await db.SaveChangesAsync();
             
             return Results.NoContent();
-        })
-        .WithName("DeleteTechnology")
-        .Produces(StatusCodes.Status204NoContent)
-        .Produces(StatusCodes.Status404NotFound);
+        });
     }
 }

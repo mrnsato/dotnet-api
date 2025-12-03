@@ -15,22 +15,22 @@ public static class VersionsEndpoints
         {
             var versions = await db.Versions
                 .Include(v => v.Technology)
-                .Select(v => new VersionDto(
-                    v.Id,
-                    v.Name,
-                    v.TechnologiesId,
-                    v.Standard,
-                    v.FullName,
-                    v.Eos,
-                    v.Eol,
-                    v.Technology.Name
-                ))
+                .Select(v => new VersionDto()
+                    {
+                        Id = v.Id,
+                        Name = v.Name,
+                        TechnologiesId = v.TechnologiesId,
+                        Standard = v.Standard,
+                        FullName = v.FullName,
+                        Eos = v.Eos,
+                        Eol = v.Eol,
+                        TechnologyName = v.Technology.Name
+                    }
+                )
                 .ToListAsync();
             
             return Results.Ok(versions);
-        })
-        .WithName("GetAllVersions")
-        .Produces<List<VersionDto>>(StatusCodes.Status200OK);
+        });
 
         // GET: Buscar versão por ID
         group.MapGet("/{id}", async (int id, AppDbContext db) =>
@@ -42,22 +42,20 @@ public static class VersionsEndpoints
             if (version == null)
                 return Results.NotFound(new { message = "Versão não encontrada" });
             
-            var dto = new VersionDto(
-                version.Id,
-                version.Name,
-                version.TechnologiesId,
-                version.Standard,
-                version.FullName,
-                version.Eos,
-                version.Eol,
-                version.Technology.Name
-            );
+            var dto = new VersionDto()
+                {
+                    Id = version.Id,
+                    Name = version.Name,
+                    TechnologiesId = version.TechnologiesId,
+                    Standard = version.Standard,
+                    FullName = version.FullName,
+                    Eos = version.Eos,
+                    Eol = version.Eol,
+                    TechnologyName = version.Technology.Name
+                };
             
             return Results.Ok(dto);
-        })
-        .WithName("GetVersionById")
-        .Produces<VersionDto>(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status404NotFound);
+        });
 
         // GET: Buscar versões por tecnologia
         group.MapGet("/technology/{technologyId}", async (int technologyId, AppDbContext db) =>
@@ -65,25 +63,25 @@ public static class VersionsEndpoints
             var versions = await db.Versions
                 .Include(v => v.Technology)
                 .Where(v => v.TechnologiesId == technologyId)
-                .Select(v => new VersionDto(
-                    v.Id,
-                    v.Name,
-                    v.TechnologiesId,
-                    v.Standard,
-                    v.FullName,
-                    v.Eos,
-                    v.Eol,
-                    v.Technology.Name
-                ))
+                .Select(v => new VersionDto()
+                    {
+                        Id = v.Id,
+                        Name = v.Name,
+                        TechnologiesId = v.TechnologiesId,
+                        Standard = v.Standard,
+                        FullName = v.FullName,
+                        Eos = v.Eos,
+                        Eol = v.Eol,
+                        TechnologyName = v.Technology.Name
+                    }
+                )
                 .ToListAsync();
             
             return Results.Ok(versions);
-        })
-        .WithName("GetVersionsByTechnology")
-        .Produces<List<VersionDto>>(StatusCodes.Status200OK);
+        });
 
         // POST: Criar nova versão
-        group.MapPost("/", async (CreateVersionDto dto, AppDbContext db) =>
+        group.MapPost("/", async (VersionDto dto, AppDbContext db) =>
         {
             var technology = await db.Technologies.FindAsync(dto.TechnologiesId);
             if (technology == null)
@@ -102,25 +100,23 @@ public static class VersionsEndpoints
             db.Versions.Add(version);
             await db.SaveChangesAsync();
             
-            var result = new VersionDto(
-                version.Id,
-                version.Name,
-                version.TechnologiesId,
-                version.Standard,
-                version.FullName,
-                version.Eos,
-                version.Eol,
-                technology.Name
-            );
+            var result = new VersionDto()
+                {
+                    Id = version.Id,
+                    Name = version.Name,
+                    TechnologiesId = version.TechnologiesId,
+                    Standard = version.Standard,
+                    FullName = version.FullName,
+                    Eos = version.Eos,
+                    Eol = version.Eol,
+                    TechnologyName = technology.Name
+                };
             
             return Results.Created($"/api/versions/{version.Id}", result);
-        })
-        .WithName("CreateVersion")
-        .Produces<VersionDto>(StatusCodes.Status201Created)
-        .Produces(StatusCodes.Status400BadRequest);
+        });
 
         // PUT: Atualizar versão
-        group.MapPut("/{id}", async (int id, UpdateVersionDto dto, AppDbContext db) =>
+        group.MapPut("/{id}", async (int id, VersionDto dto, AppDbContext db) =>
         {
             var version = await db.Versions.FindAsync(id);
             
@@ -140,23 +136,21 @@ public static class VersionsEndpoints
             
             await db.SaveChangesAsync();
             
-            var result = new VersionDto(
-                version.Id,
-                version.Name,
-                version.TechnologiesId,
-                version.Standard,
-                version.FullName,
-                version.Eos,
-                version.Eol,
-                technology.Name
-            );
+            var result = new VersionDto()
+                {
+                    Id = version.Id,
+                    Name = version.Name,
+                    TechnologiesId = version.TechnologiesId,
+                    Standard = version.Standard,
+                    FullName = version.FullName,
+                    Eos = version.Eos,
+                    Eol = version.Eol,
+                    TechnologyName = technology.Name
+                }
+            ;
             
             return Results.Ok(result);
-        })
-        .WithName("UpdateVersion")
-        .Produces<VersionDto>(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status404NotFound)
-        .Produces(StatusCodes.Status400BadRequest);
+        });
 
         // DELETE: Remover versão
         group.MapDelete("/{id}", async (int id, AppDbContext db) =>
@@ -170,9 +164,6 @@ public static class VersionsEndpoints
             await db.SaveChangesAsync();
             
             return Results.NoContent();
-        })
-        .WithName("DeleteVersion")
-        .Produces(StatusCodes.Status204NoContent)
-        .Produces(StatusCodes.Status404NotFound);
+        });
     }
 }

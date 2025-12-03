@@ -14,14 +14,18 @@ public static class ApplicationsEndpoints
         // GET: Listar todas as aplicações
         group.MapGet("/", async (AppDbContext db) =>
         {
-            var applications = await db.Applications
-                .Select(a => new ApplicationDto(a.Id, a.Name, a.Active))
+            var application = await db.Applications
+                .Select(a => new ApplicationDto()
+                    {
+                        Id = a.Id,
+                        Name = a.Name,
+                        Active = a.Active
+                    }
+                )
                 .ToListAsync();
             
-            return Results.Ok(applications);
-        })
-        .WithName("GetAllApplications")
-        .Produces<List<ApplicationDto>>(StatusCodes.Status200OK);
+            return Results.Ok(application);
+        });
 
         // GET: Buscar aplicação por ID
         group.MapGet("/{id}", async (int id, AppDbContext db) =>
@@ -30,28 +34,35 @@ public static class ApplicationsEndpoints
             
             if (application == null)
                 return Results.NotFound(new { message = "Aplicação não encontrada" });
-            
-            return Results.Ok(new ApplicationDto(application.Id, application.Name, application.Active));
-        })
-        .WithName("GetApplicationById")
-        .Produces<ApplicationDto>(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status404NotFound);
+
+            var returnDto = new ApplicationDto()
+            {
+                Id = application.Id,
+                Name = application.Name,
+                Active = application.Active
+            };
+
+            return Results.Ok(returnDto);
+        });
 
         // GET: Buscar aplicações ativas
         group.MapGet("/active", async (AppDbContext db) =>
         {
-            var applications = await db.Applications
+            var application = await db.Applications
                 .Where(a => a.Active)
-                .Select(a => new ApplicationDto(a.Id, a.Name, a.Active))
+                .Select(a => new ApplicationDto()
+                    { 
+                        Id = a.Id,
+                        Name = a.Name,
+                        Active = a.Active 
+                    })
                 .ToListAsync();
             
-            return Results.Ok(applications);
-        })
-        .WithName("GetActiveApplications")
-        .Produces<List<ApplicationDto>>(StatusCodes.Status200OK);
+            return Results.Ok(application);
+        });
 
         // POST: Criar nova aplicação
-        group.MapPost("/", async (CreateApplicationDto dto, AppDbContext db) =>
+        group.MapPost("/", async (ApplicationDto dto, AppDbContext db) =>
         {
             var application = new Application 
             { 
@@ -62,14 +73,17 @@ public static class ApplicationsEndpoints
             db.Applications.Add(application);
             await db.SaveChangesAsync();
             
-            var result = new ApplicationDto(application.Id, application.Name, application.Active);
+            var result = new ApplicationDto()
+            {
+                Id = application.Id,
+                Name = application.Name,
+                Active = application.Active
+            };
             return Results.Created($"/api/applications/{application.Id}", result);
-        })
-        .WithName("CreateApplication")
-        .Produces<ApplicationDto>(StatusCodes.Status201Created);
+        });
 
         // PUT: Atualizar aplicação
-        group.MapPut("/{id}", async (int id, UpdateApplicationDto dto, AppDbContext db) =>
+        group.MapPut("/{id}", async (int id, ApplicationDto dto, AppDbContext db) =>
         {
             var application = await db.Applications.FindAsync(id);
             
@@ -80,11 +94,13 @@ public static class ApplicationsEndpoints
             application.Active = dto.Active;
             await db.SaveChangesAsync();
             
-            return Results.Ok(new ApplicationDto(application.Id, application.Name, application.Active));
-        })
-        .WithName("UpdateApplication")
-        .Produces<ApplicationDto>(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status404NotFound);
+            return Results.Ok(new ApplicationDto()
+            {
+                Id = application.Id,
+                Name = application.Name,
+                Active =  application.Active
+            });
+        });
 
         // DELETE: Remover aplicação
         group.MapDelete("/{id}", async (int id, AppDbContext db) =>
@@ -98,9 +114,6 @@ public static class ApplicationsEndpoints
             await db.SaveChangesAsync();
             
             return Results.NoContent();
-        })
-        .WithName("DeleteApplication")
-        .Produces(StatusCodes.Status204NoContent)
-        .Produces(StatusCodes.Status404NotFound);
+        });
     }
 }
