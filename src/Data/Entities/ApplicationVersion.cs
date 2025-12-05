@@ -1,7 +1,7 @@
 
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace  dotnet_api.Data.Entities
+namespace  Entities
 {
         [Table("applications_versions")]
     public class ApplicationVersion {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using dotnet_api.Data;
-using dotnet_api.Endpoints;
-using Microsoft.AspNetCore.Builder;
+using Data;
+using Endpoints;
+using Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +22,6 @@ var app = builder.Build();
 // Configurar o pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
-    // ✅ NSwag substitui o Swashbuckle
     app.UseSwagger();       // Serve generated Swagger as JSON
     app.UseSwaggerUI();     // Interface Swagger UI em /swagger
 }

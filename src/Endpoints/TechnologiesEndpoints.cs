@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using dotnet_api.Data;
-using dotnet_api.Data.Entities;
-using dotnet_api.Models;
+using Data;
+using Entities;
+using Models;
 
-namespace dotnet_api.Endpoints;
+namespace Endpoints;
 
 public static class TechnologiesEndpoints
 {

@@ -1,4 +1,4 @@
- namespace dotnet_api.Models;
+ namespace Models;
 
 // DTOs para Technology
 

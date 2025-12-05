@@ -1,9 +1,9 @@
 
-namespace dotnet_api.Models;
+namespace Models;
 
 // DTOs para Version
 public record VersionDto{
-     public int Id { get; init; } 
+    public int Id { get; init; } 
     public string Name { get; init; } = string.Empty;
     public int TechnologiesId { get; init; }
      public bool Standard { get; init; } 

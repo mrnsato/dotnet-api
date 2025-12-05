@@ -1,5 +1,5 @@
 
-namespace dotnet_api.Models;
+namespace Models;
 
 // DTOs para Application
 public record ApplicationDto

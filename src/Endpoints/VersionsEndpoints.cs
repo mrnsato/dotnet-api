@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using dotnet_api.Data;
-using dotnet_api.Models;
+using Data;
+using Models;
+using Entities;
 
-namespace dotnet_api.Endpoints;
+
+
+namespace Endpoints;
 
 public static class VersionsEndpoints
 {
@@ -81,13 +84,13 @@ public static class VersionsEndpoints
         });
 
         // POST: Criar nova versão
-        group.MapPost("/", async (VersionDto dto, AppDbContext db) =>
+        _ = group.MapPost("/", async (VersionDto dto, AppDbContext db) =>
         {
             var technology = await db.Technologies.FindAsync(dto.TechnologiesId);
             if (technology == null)
                 return Results.BadRequest(new { message = "Tecnologia não encontrada" });
 
-            var version = new Data.Entities.Version
+            var version = new Entities.Version
             {
                 Name = dto.Name,
                 TechnologiesId = dto.TechnologiesId,
@@ -96,22 +99,22 @@ public static class VersionsEndpoints
                 Eos = dto.Eos,
                 Eol = dto.Eol
             };
-            
+
             db.Versions.Add(version);
             await db.SaveChangesAsync();
-            
+
             var result = new VersionDto()
-                {
-                    Id = version.Id,
-                    Name = version.Name,
-                    TechnologiesId = version.TechnologiesId,
-                    Standard = version.Standard,
-                    FullName = version.FullName,
-                    Eos = version.Eos,
-                    Eol = version.Eol,
-                    TechnologyName = technology.Name
-                };
-            
+            {
+                Id = version.Id,
+                Name = version.Name,
+                TechnologiesId = version.TechnologiesId,
+                Standard = version.Standard,
+                FullName = version.FullName,
+                Eos = version.Eos,
+                Eol = version.Eol,
+                TechnologyName = technology.Name
+            };
+
             return Results.Created($"/api/versions/{version.Id}", result);
         });
 

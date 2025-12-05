@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using dotnet_api.Data;
-using dotnet_api.Data.Entities;
-using dotnet_api.Models;
+using Data;
+using Models;
+using Entities;
 
-namespace dotnet_api.Endpoints;
+
+namespace Endpoints;
 
 public static class ApplicationsEndpoints
 {
@@ -64,7 +65,7 @@ public static class ApplicationsEndpoints
         // POST: Criar nova aplicação
         group.MapPost("/", async (ApplicationDto dto, AppDbContext db) =>
         {
-            var application = new Application 
+            var application = new Application
             { 
                 Name = dto.Name, 
                 Active = dto.Active 
