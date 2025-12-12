@@ -1,5 +1,6 @@
 ## Preprando o Ambiente
 
+## Back End:
 ## Listar e atualizar os pacotes disponíveis
 - sudo apt-get update
 - sudo apt-get upgrade
@@ -30,3 +31,15 @@
 - more dotnet-api.snl
 - dotnet clean
 
+## Front End:
+
+## Instalando o node 22 TLS e configurando no ambiente
+- mise install node@22
+- mise use -g node@22
+- node -v >> 
+- ❯ mise use -g node@22
+    mise ~/.config/mise/config.toml tools: node@22.21.1
+
+    ~
+    ❯ node -v
+    v22.21.1
