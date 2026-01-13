@@ -20,7 +20,7 @@ public static class ApplicationsEndpoints
                     {
                         Id = a.Id,
                         Name = a.Name,
-                        Active = a.Active
+                        Active = a.Active ?? false
                     }
                 )
                 .ToListAsync();
@@ -40,7 +40,7 @@ public static class ApplicationsEndpoints
             {
                 Id = application.Id,
                 Name = application.Name,
-                Active = application.Active
+                Active = application.Active ?? false
             };
 
             return Results.Ok(returnDto);
@@ -50,12 +50,12 @@ public static class ApplicationsEndpoints
         group.MapGet("/active", async (AppDbContext db) =>
         {
             var application = await db.Applications
-                .Where(a => a.Active)
+                .Where(a => a.Active ?? false)
                 .Select(a => new ApplicationDto()
                     { 
                         Id = a.Id,
                         Name = a.Name,
-                        Active = a.Active 
+                        Active = a.Active ?? false
                     })
                 .ToListAsync();
             
@@ -78,7 +78,7 @@ public static class ApplicationsEndpoints
             {
                 Id = application.Id,
                 Name = application.Name,
-                Active = application.Active
+                Active = application.Active ?? false
             };
             return Results.Created($"/api/applications/{application.Id}", result);
         });
@@ -99,7 +99,7 @@ public static class ApplicationsEndpoints
             {
                 Id = application.Id,
                 Name = application.Name,
-                Active =  application.Active
+                Active = application.Active ?? false
             });
         });
 

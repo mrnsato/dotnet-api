@@ -10,6 +10,6 @@ namespace  Entities
         [Column("name")]
         public string Name { get; set; } = string.Empty;
         [Column("active")]
-        public bool Active { get; set; }
+        public bool? Active { get; set; }
     }
 }

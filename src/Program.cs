@@ -5,10 +5,14 @@ using Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = "Host=localhost;Port=5432;Database=meubanco;Username=meuusuario;Password=senhasegura123";
+
+Console.WriteLine($"Using connection string: {connectionString}");
+
 // Configuração do DbContext com PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+    options.UseNpgsql(connectionString));
 
 // Enable API explorer required by Swagger/OpenAPI generation for minimal APIs
 builder.Services.AddEndpointsApiExplorer();
