@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
 // Enable API explorer required by Swagger/OpenAPI generation for minimal APIs
 builder.Services.AddEndpointsApiExplorer();
 
