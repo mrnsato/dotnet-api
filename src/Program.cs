@@ -6,9 +6,9 @@ using Entities;
 var builder = WebApplication.CreateBuilder(args);
 
 // var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-var connectionString = "Host=localhost;Port=5432;Database=meubanco;Username=meuusuario;Password=senhasegura123";
+ var connectionString = "Host=localhost;Port=5432;Database=meubanco;Username=meuusuario;Password=senhasegura123";
 
-Console.WriteLine($"Using connection string: {connectionString}");
+ Console.WriteLine($"Using connection string: {connectionString}");
 
 // Configuração do DbContext com PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(options =>
