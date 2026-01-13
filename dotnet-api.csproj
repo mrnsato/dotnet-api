@@ -6,7 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <EnableOpenApiSourceGeneration>false</EnableOpenApiSourceGeneration>
      <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-## Preprando o Ambiente
+## Preparando o Ambiente
 
 ## Back End:
 ## Listar e atualizar os pacotes disponíveis
