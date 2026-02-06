@@ -1,0 +1,14 @@
+# Ignorar dados do Postgres
+postgres_data/
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos temporários
+*.tmp
+*.swp
+
+# Ignorar arquivos do Docker
+docker-compose.override.yml
+.env
+

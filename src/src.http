@@ -1,0 +1,162 @@
+@src_HostAddress = http://localhost:5000
+
+### Applications
+
+GET {{src_HostAddress}}/api/applications/
+Accept: application/json
+
+###
+
+GET {{src_HostAddress}}/api/applications/1
+Accept: application/json
+
+###
+
+GET {{src_HostAddress}}/api/applications/active
+Accept: application/json
+
+###
+
+POST {{src_HostAddress}}/api/applications/
+Content-Type: application/json
+
+{
+	"name": "Minha App",
+	"active": true
+}
+
+###
+
+PUT {{src_HostAddress}}/api/applications/1
+Content-Type: application/json
+
+{
+	"id": 1,
+	"name": "Minha App Atualizada",
+	"active": false
+}
+
+###
+
+DELETE {{src_HostAddress}}/api/applications/1
+
+###
+
+### Application Versions
+
+GET {{src_HostAddress}}/api/application-versions/
+Accept: application/json
+
+###
+
+GET {{src_HostAddress}}/api/application-versions/1
+Accept: application/json
+
+###
+
+GET {{src_HostAddress}}/api/application-versions/application/1
+Accept: application/json
+
+###
+
+GET {{src_HostAddress}}/api/application-versions/version/1
+Accept: application/json
+
+###
+
+POST {{src_HostAddress}}/api/application-versions/
+Content-Type: application/json
+
+{
+	"applicationId": 1,
+	"versionId": 1
+}
+
+###
+
+DELETE {{src_HostAddress}}/api/application-versions/1
+
+###
+
+### Technologies
+
+GET {{src_HostAddress}}/api/technology/
+Accept: application/json
+
+###
+
+GET {{src_HostAddress}}/api/technology/1
+Accept: application/json
+
+###
+
+POST {{src_HostAddress}}/api/technology/
+Content-Type: application/json
+
+{
+	"name": "Dotnet"
+}
+
+###
+
+PUT {{src_HostAddress}}/api/technology/1
+Content-Type: application/json
+
+{
+	"id": 1,
+	"name": "Dotnet  Updated"
+}
+
+###
+
+DELETE {{src_HostAddress}}/api/technology/1
+
+###
+
+### Versions
+
+GET {{src_HostAddress}}/api/versions/
+Accept: application/json
+
+###
+
+GET {{src_HostAddress}}/api/versions/1
+Accept: application/json
+
+###
+
+GET {{src_HostAddress}}/api/versions/technology/1
+Accept: application/json
+
+###
+
+POST {{src_HostAddress}}/api/versions/
+Content-Type: application/json
+
+{
+	"name": "6.0",
+	"technologiesId": 1,
+	"standard": false,
+	"fullName": "Dotnet 6.0",
+	"eos": null,
+	"eol": null
+}
+
+###
+
+PUT {{src_HostAddress}}/api/versions/1
+Content-Type: application/json
+
+{
+	"id": 1,
+	"name": "6.0.1",
+	"technologiesId": 1,
+	"standard": false,
+	"fullName": "Dotnet 6.0.1",
+	"eos": null,
+	"eol": null
+}
+
+###
+
+DELETE {{src_HostAddress}}/api/versions/1

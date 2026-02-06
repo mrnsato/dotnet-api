@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:18
+    container_name: postgres_tls
+    restart: always
+    environment:
+      POSTGRES_DB: meubanco
+      POSTGRES_USER: meuusuario
+      POSTGRES_PASSWORD: senhasegura123
+    volumes:
+      - ./postgres_data:/var/lib/postgresql
+      - ./database_scripts:/docker-entrypoint-initdb.d
+    ports:
+     - "5432:5432"
