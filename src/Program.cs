@@ -28,6 +28,18 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new() { Title = "dotnet_api", Version = "v1" });
 });
 
+// Configurar CORS para permitir requisições do frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000", "http://localhost:3001")
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
 // Configurar o pipeline HTTP
@@ -38,6 +50,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Usar a política de CORS
+app.UseCors("AllowFrontend");
 
 // Registrar endpoints
 app.MapTechnologiesEndpoints();

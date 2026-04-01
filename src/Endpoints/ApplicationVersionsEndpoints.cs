@@ -136,6 +136,47 @@ public static class ApplicationVersionsEndpoints
             return Results.Created($"/api/application-versions/{appVersion.Id}", result);
         });
 
+        // PUT: Atualizar associação
+        group.MapPut("/{id}", async (int id, ApplicationVersionDto dto, AppDbContext db) =>
+        {
+            var appVersion = await db.ApplicationVersions.FindAsync(id);
+            
+            if (appVersion == null)
+                return Results.NotFound(new { message = "Associação não encontrada" });
+
+            var application = await db.Applications.FindAsync(dto.ApplicationId);
+            if (application == null)
+                return Results.BadRequest(new { message = "Aplicação não encontrada" });
+
+            var version = await db.Versions.FindAsync(dto.VersionId);
+            if (version == null)
+                return Results.BadRequest(new { message = "Versão não encontrada" });
+
+            // Verificar se a nova associação já existe (evitar duplicatas)
+            var exists = await db.ApplicationVersions
+                .AnyAsync(av => av.ApplicationId == dto.ApplicationId 
+                    && av.VersionId == dto.VersionId 
+                    && av.Id != id);
+            
+            if (exists)
+                return Results.BadRequest(new { message = "Esta associação já existe" });
+
+            appVersion.ApplicationId = dto.ApplicationId;
+            appVersion.VersionId = dto.VersionId;
+            await db.SaveChangesAsync();
+            
+            var result = new ApplicationVersionDto()
+            {
+                Id = appVersion.Id,
+                ApplicationId = appVersion.ApplicationId,
+                VersionId = appVersion.VersionId,
+                ApplicationName = application.Name,
+                VersionName = version.FullName
+            };
+            
+            return Results.Ok(result);
+        });
+
         // DELETE: Remover associação
         group.MapDelete("/{id}", async (int id, AppDbContext db) =>
         {

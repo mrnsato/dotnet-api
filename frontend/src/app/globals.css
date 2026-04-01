@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f9fafb;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4;
+}
+
+.btn {
+  @apply px-4 py-2 rounded font-medium transition-all duration-200;
+}
+
+.btn-primary {
+  @apply btn bg-primary text-white hover:opacity-80;
+}
+
+.btn-secondary {
+  @apply btn bg-secondary text-white hover:opacity-80;
+}
+
+.btn-danger {
+  @apply btn bg-danger text-white hover:opacity-80;
+}
+
+.btn-gray {
+  @apply btn bg-gray-300 text-gray-700 hover:bg-gray-400;
+}
+
+.card {
+  @apply bg-white rounded-lg shadow-md p-6;
+}
+
+.table-cell {
+  @apply px-4 py-2 text-left;
+}
+
+.text-muted {
+  @apply text-gray-500;
+}
+
+.text-heading {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+.divider {
+  @apply border-t border-gray-300 my-6;
+}
