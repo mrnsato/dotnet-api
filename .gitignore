@@ -12,3 +12,5 @@ postgres_data/
 docker-compose.override.yml
 .env
 
+
+.fake
