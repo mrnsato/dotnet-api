@@ -81,21 +81,29 @@ public static class TechnologiesEndpoints
         // DELETE: Remover tecnologia
         group.MapDelete("/{id}", async (int id, AppDbContext db) =>
         {
-            var technology = await db.Technologies
-                .Include(t => t.Versions)
-                .FirstOrDefaultAsync(t => t.Id == id);
-            
-            if (technology == null)
-                return Results.NotFound(new { message = "Tecnologia não encontrada" });
-            
-            // Deletar todas as versões associadas
-            db.Versions.RemoveRange(technology.Versions);
-            
-            // Deletar a tecnologia
-            db.Technologies.Remove(technology);
-            await db.SaveChangesAsync();
-            
-            return Results.NoContent();
+            try
+            {
+                var technology = await db.Technologies
+                    .Include(t => t.Versions)
+                    .FirstOrDefaultAsync(t => t.Id == id);
+                
+                if (technology == null)
+                    return Results.NotFound(new { message = "Tecnologia não encontrada" });
+                
+                // Deletar todas as versões associadas
+                db.Versions.RemoveRange(technology.Versions);
+                
+                // Deletar a tecnologia
+                db.Technologies.Remove(technology);
+                await db.SaveChangesAsync();
+                
+                return Results.NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao deletar tecnologia {id}: {ex.Message}");
+                return Results.Problem(detail: ex.Message, statusCode: 500, title: "Erro ao deletar tecnologia");
+            }
         });
     }
 }

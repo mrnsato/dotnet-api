@@ -180,15 +180,23 @@ public static class ApplicationVersionsEndpoints
         // DELETE: Remover associação
         group.MapDelete("/{id}", async (int id, AppDbContext db) =>
         {
-            var appVersion = await db.ApplicationVersions.FindAsync(id);
-            
-            if (appVersion == null)
-                return Results.NotFound(new { message = "Associação não encontrada" });
-            
-            db.ApplicationVersions.Remove(appVersion);
-            await db.SaveChangesAsync();
-            
-            return Results.NoContent();
+            try
+            {
+                var appVersion = await db.ApplicationVersions.FindAsync(id);
+                
+                if (appVersion == null)
+                    return Results.NotFound(new { message = "Associação não encontrada" });
+                
+                db.ApplicationVersions.Remove(appVersion);
+                await db.SaveChangesAsync();
+                
+                return Results.NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao deletar associação {id}: {ex.Message}");
+                return Results.Problem(detail: ex.Message, statusCode: 500, title: "Erro ao deletar aplicação");
+            }
         });
     }
 }

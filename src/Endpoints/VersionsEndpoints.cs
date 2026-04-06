@@ -158,15 +158,23 @@ public static class VersionsEndpoints
         // DELETE: Remover versão
         group.MapDelete("/{id}", async (int id, AppDbContext db) =>
         {
-            var version = await db.Versions.FindAsync(id);
-            
-            if (version == null)
-                return Results.NotFound(new { message = "Versão não encontrada" });
-            
-            db.Versions.Remove(version);
-            await db.SaveChangesAsync();
-            
-            return Results.NoContent();
+            try
+            {
+                var version = await db.Versions.FindAsync(id);
+                
+                if (version == null)
+                    return Results.NotFound(new { message = "Versão não encontrada" });
+                
+                db.Versions.Remove(version);
+                await db.SaveChangesAsync();
+                
+                return Results.NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao deletar versão {id}: {ex.Message}");
+                return Results.Problem(detail: ex.Message, statusCode: 500, title: "Erro ao deletar versão");
+            }
         });
     }
 }

@@ -106,15 +106,23 @@ public static class ApplicationsEndpoints
         // DELETE: Remover aplicação
         group.MapDelete("/{id}", async (int id, AppDbContext db) =>
         {
-            var application = await db.Applications.FindAsync(id);
-            
-            if (application == null)
-                return Results.NotFound(new { message = "Aplicação não encontrada" });
-            
-            db.Applications.Remove(application);
-            await db.SaveChangesAsync();
-            
-            return Results.NoContent();
+            try
+            {
+                var application = await db.Applications.FindAsync(id);
+                
+                if (application == null)
+                    return Results.NotFound(new { message = "Aplicação não encontrada" });
+                
+                db.Applications.Remove(application);
+                await db.SaveChangesAsync();
+                
+                return Results.NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao deletar aplicação {id}: {ex.Message}");
+                return Results.Problem(detail: ex.Message, statusCode: 500, title: "Erro ao deletar aplicação");
+            }
         });
     }
 }

@@ -34,9 +34,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend", policy =>
     {
         policy.WithOrigins("http://localhost:3000", "http://localhost:3001")
-              .AllowAnyMethod()
-              .AllowAnyHeader()
-              .AllowCredentials();
+              .AllowAnyMethod()  // Permite GET, POST, PUT, DELETE, etc.
+              .AllowAnyHeader()  // Permite qualquer header
+              .AllowCredentials()
+              .WithExposedHeaders("Content-Type"); // Expõe headers para o cliente
     });
 });
 
@@ -49,10 +50,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();     // Interface Swagger UI em /swagger
 }
 
-app.UseHttpsRedirection();
-
-// Usar a política de CORS
+// CORS deve vir ANTES de UseHttpsRedirection para requisições preflight funcionarem corretamente
 app.UseCors("AllowFrontend");
+
+// UseHttpsRedirection apenas em produção para evitar conflitos com CORS em desenvolvimento
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 // Registrar endpoints
 app.MapTechnologiesEndpoints();
