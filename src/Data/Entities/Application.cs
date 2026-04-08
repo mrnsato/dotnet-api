@@ -1,17 +1,16 @@
 
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace  Entities
+namespace Entities
 {
-        [Table("applications")]
-    public class Application {
+    [Table("applications")]
+    public class Application
+    {
         [Column("id")]
         public int Id { get; set; }
         [Column("name")]
         public string Name { get; set; } = string.Empty;
         [Column("active")]
         public bool? Active { get; set; }
-       
-        public ICollection<Version> Versions { get; set; } = new List<Version>();
     }
 }

@@ -82,21 +82,17 @@ public static class TechnologiesEndpoints
         group.MapDelete("/{id}", async (int id, AppDbContext db) =>
         {
             try
-            {
-                var technology = await db.Technologies
-                    .Include(t => t.Versions)
-                    .FirstOrDefaultAsync(t => t.Id == id);
+            {    
+                var technology = await db.Technologies.FindAsync(id);
                 
                 if (technology == null)
                     return Results.NotFound(new { message = "Tecnologia não encontrada" });
                 
-                if (technology.Versions != null && technology.Versions.Any())
-                    return Results.BadRequest(new { message = "Não é possível deletar esta tecnologia pois ela possui versões associadas" });
-                
-                // Deletar a tecnologia
+                var hasAssociations = await db.Technologies.AnyAsync(t => t.Id == id);
+                if (hasAssociations)                    
+                    return Results.BadRequest(new { message = "Não é possível deletar esta tecnologia pois ela possui associações" });
                 db.Technologies.Remove(technology);
                 await db.SaveChangesAsync();
-                
                 return Results.NoContent();
             }
             catch (Exception ex)
