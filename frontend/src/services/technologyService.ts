@@ -24,6 +24,11 @@ export const technologyService = {
   },
 
   async delete(id: number): Promise<void> {
-    await api.delete(API_ENDPOINTS.TECHNOLOGY_BY_ID(id));
+    try {
+      await api.delete(API_ENDPOINTS.TECHNOLOGY_BY_ID(id));
+    } catch (error: any) {
+      // Extrai a mensagem do backend (string direta ou objeto { message: "..." }
+      throw new Error('Não é possível deletar essa tecnologia. Ela pode estar associada a projetos ou ter outras dependências.');
+    }
   },
 };

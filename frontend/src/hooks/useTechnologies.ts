@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useEffect, useCallback } from 'react';
 import { Technology } from '@/types';
 import { technologyService } from '@/services/technologyService';
@@ -9,6 +8,8 @@ interface UseTechnologiesReturn {
   technologies: Technology[];
   loading: boolean;
   error: string | null;
+  deleteError: string | null;        // 👈 novo
+  clearDeleteError: () => void;      // 👈 novo
   refetch: () => Promise<void>;
   create: (data: Pick<Technology, 'name'>) => Promise<Technology>;
   update: (id: number, data: Pick<Technology, 'name'>) => Promise<Technology>;
@@ -19,6 +20,7 @@ export const useTechnologies = (): UseTechnologiesReturn => {
   const [technologies, setTechnologies] = useState<Technology[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null); // 👈 novo
 
   const fetchTechnologies = useCallback(async () => {
     try {
@@ -63,11 +65,12 @@ export const useTechnologies = (): UseTechnologiesReturn => {
 
   const deleteItem = async (id: number): Promise<void> => {
     try {
+      setDeleteError(null); // 👈 limpa erro anterior antes de tentar
       await technologyService.delete(id);
       setTechnologies(technologies.filter((t) => t.id !== id));
     } catch (err) {
-      const errorMsg = getErrorMessage(err);
-      setError(errorMsg);
+      // 👈 erro de delete vai pro estado próprio, não no error genérico
+      setDeleteError('Não é possível deletar essa tecnologia pois ela possui associações.');
       throw err;
     }
   };
@@ -76,6 +79,8 @@ export const useTechnologies = (): UseTechnologiesReturn => {
     technologies,
     loading,
     error,
+    deleteError,                          // 👈 novo
+    clearDeleteError: () => setDeleteError(null), // 👈 novo
     refetch: fetchTechnologies,
     create,
     update,

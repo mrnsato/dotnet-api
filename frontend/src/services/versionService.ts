@@ -29,6 +29,11 @@ export const versionService = {
   },
 
   async delete(id: number): Promise<void> {
+    try{
     await api.delete(API_ENDPOINTS.VERSION_BY_ID(id));
+    } catch (error: any) {
+      // Extrai a mensagem do backend (string direta ou objeto { message: "..." })
+      throw new Error('Não é possível deletar essa versão. Ela pode estar associada a projetos ou ter outras dependências.');
+    }
   },
 };
