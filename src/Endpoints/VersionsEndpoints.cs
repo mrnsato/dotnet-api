@@ -165,6 +165,10 @@ public static class VersionsEndpoints
                 if (version == null)
                     return Results.NotFound(new { message = "Versão não encontrada" });
                 
+                var hasAssociations = await db.ApplicationVersions.AnyAsync(av => av.VersionId == id);
+                if (hasAssociations)
+                    return Results.BadRequest(new { message = "Não é possível deletar esta versão pois ela possui associações" });
+
                 db.Versions.Remove(version);
                 await db.SaveChangesAsync();
                 

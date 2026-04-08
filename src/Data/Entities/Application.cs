@@ -11,5 +11,7 @@ namespace  Entities
         public string Name { get; set; } = string.Empty;
         [Column("active")]
         public bool? Active { get; set; }
+       
+        public ICollection<Version> Versions { get; set; } = new List<Version>();
     }
 }

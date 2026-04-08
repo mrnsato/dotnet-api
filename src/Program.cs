@@ -28,16 +28,14 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new() { Title = "dotnet_api", Version = "v1" });
 });
 
-// Configurar CORS para permitir requisições do frontend
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
         policy.WithOrigins("http://localhost:3000", "http://localhost:3001")
-              .AllowAnyMethod()  // Permite GET, POST, PUT, DELETE, etc.
-              .AllowAnyHeader()  // Permite qualquer header
-              .AllowCredentials()
-              .WithExposedHeaders("Content-Type"); // Expõe headers para o cliente
+              .AllowAnyMethod()
+              .AllowAnyHeader();
     });
 });
 

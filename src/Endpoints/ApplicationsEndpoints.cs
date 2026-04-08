@@ -113,6 +113,9 @@ public static class ApplicationsEndpoints
                 if (application == null)
                     return Results.NotFound(new { message = "Aplicação não encontrada" });
                 
+                var hasAssociations = await db.ApplicationVersions.AnyAsync(av => av.ApplicationId == id);
+                if (hasAssociations)                    
+                    return Results.BadRequest(new { message = "Não é possível deletar esta aplicação pois ela possui associações" });
                 db.Applications.Remove(application);
                 await db.SaveChangesAsync();
                 

@@ -90,8 +90,8 @@ public static class TechnologiesEndpoints
                 if (technology == null)
                     return Results.NotFound(new { message = "Tecnologia não encontrada" });
                 
-                // Deletar todas as versões associadas
-                db.Versions.RemoveRange(technology.Versions);
+                if (technology.Versions != null && technology.Versions.Any())
+                    return Results.BadRequest(new { message = "Não é possível deletar esta tecnologia pois ela possui versões associadas" });
                 
                 // Deletar a tecnologia
                 db.Technologies.Remove(technology);
