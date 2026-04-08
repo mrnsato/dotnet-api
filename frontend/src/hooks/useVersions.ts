@@ -70,8 +70,6 @@ export const useVersions = (): UseVersionsReturn => {
       await versionService.delete(id);
       setVersions(versions.filter((v) => v.id !== id));
     } catch (err) {
-      const errorMsg = getErrorMessage(err);
-      setError(errorMsg);
       throw err;
     }
   };

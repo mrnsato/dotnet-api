@@ -76,8 +76,6 @@ export const useApplicationVersions = (): UseApplicationVersionsReturn => {
       await applicationVersionService.delete(id);
       setApplicationVersions(applicationVersions.filter((av) => av.id !== id));
     } catch (err) {
-      const errorMsg = getErrorMessage(err);
-      setError(errorMsg);
       throw err;
     }
   };

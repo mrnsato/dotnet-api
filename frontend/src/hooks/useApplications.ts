@@ -70,8 +70,6 @@ export const useApplications = (): UseApplicationsReturn => {
       await applicationService.delete(id);
       setApplications(applications.filter((a) => a.id !== id));
     } catch (err) {
-      const errorMsg = getErrorMessage(err);
-      setError(errorMsg);
       throw err;
     }
   };
