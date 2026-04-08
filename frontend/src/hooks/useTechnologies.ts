@@ -69,8 +69,6 @@ export const useTechnologies = (): UseTechnologiesReturn => {
       await technologyService.delete(id);
       setTechnologies(technologies.filter((t) => t.id !== id));
     } catch (err) {
-      // 👈 erro de delete vai pro estado próprio, não no error genérico
-      setDeleteError('Não é possível deletar essa tecnologia pois ela possui associações.');
       throw err;
     }
   };
