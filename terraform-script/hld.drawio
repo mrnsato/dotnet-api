@@ -1,0 +1,31 @@
+<mxfile host="65bd71144e">
+    <diagram id="3OeHyL8pAXTlbTYUHl-E" name="Page-1">
+        <mxGraphModel dx="346" dy="499" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F2F2F2;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="50" width="610" height="520" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="EHQ-ITEC-ARCHI-TEST" style="verticalLabelPosition=middle;html=1;verticalAlign=middle;align=left;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.azure_subscription;labelPosition=right;spacingLeft=7;fontColor=#66B2FF;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="60" width="50" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="110" width="570" height="440" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="arch-coe-apimanager" style="image;aspect=fixed;html=1;points=[];align=left;fontSize=12;image=img/lib/azure2/general/Resource_Groups.svg;labelPosition=right;verticalLabelPosition=middle;verticalAlign=middle;spacingLeft=5;" parent="1" vertex="1">
+                    <mxGeometry x="79.06" y="120" width="31.88" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" style="edgeStyle=none;html=1;" parent="1" source="9" target="10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="&lt;span style=&quot;background-color: light-dark(#ffffff, var(--ge-dark-color, #121212)); color: rgb(63, 63, 63);&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;apimanager&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(63, 63, 63); background-color: light-dark(#ffffff, var(--ge-dark-color, #121212));&quot;&gt;-container-env&lt;/span&gt;" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/other/Container_App_Environments.svg;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="390" width="68" height="68" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="api-manager-container" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/other/Worker_Container_App.svg;labelPosition=center;verticalLabelPosition=top;verticalAlign=bottom;spacingTop=0;spacingBottom=3;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="220" width="68" height="66" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
