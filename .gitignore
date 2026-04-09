@@ -13,4 +13,10 @@ docker-compose.override.yml
 .env
 
 
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
 .fake
