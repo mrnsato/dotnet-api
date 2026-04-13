@@ -44,7 +44,6 @@
 /home/melsantos/code/dotnet-api/src/bin/Debug/net10.0/BuildHost-netcore/tr/System.CommandLine.resources.dll
 /home/melsantos/code/dotnet-api/src/bin/Debug/net10.0/BuildHost-netcore/zh-Hans/System.CommandLine.resources.dll
 /home/melsantos/code/dotnet-api/src/bin/Debug/net10.0/BuildHost-netcore/zh-Hant/System.CommandLine.resources.dll
-/home/melsantos/code/dotnet-api/src/bin/Debug/net10.0/appsettings.Development.json
 /home/melsantos/code/dotnet-api/src/bin/Debug/net10.0/appsettings.json
 /home/melsantos/code/dotnet-api/src/bin/Debug/net10.0/dotnet-api.staticwebassets.endpoints.json
 /home/melsantos/code/dotnet-api/src/bin/Debug/net10.0/dotnet-api
@@ -159,8 +158,6 @@
 /home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.csproj.AssemblyReference.cache
 /home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/rpswa.dswa.cache.json
 /home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.GeneratedMSBuildEditorConfig.editorconfig
-/home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.AssemblyInfoInputs.cache
-/home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.AssemblyInfo.cs
 /home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.csproj.CoreCompileInputs.cache
 /home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.MvcApplicationPartsAssemblyInfo.cs
 /home/melsantos/code/dotnet-api/src/obj/Debug/net10.0/dotnet-api.MvcApplicationPartsAssemblyInfo.cache

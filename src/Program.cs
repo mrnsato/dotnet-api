@@ -62,4 +62,5 @@ app.MapTechnologiesEndpoints();
 app.MapVersionsEndpoints();
 app.MapApplicationsEndpoints();
 app.MapApplicationVersionsEndpoints();
+app.MapGet("/health", () => Results.Ok("API is healthy"));
 app.Run();
