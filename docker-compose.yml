@@ -14,3 +14,26 @@ services:
       - ./database_scripts:/docker-entrypoint-initdb.d
     ports:
      - "5432:5432"
+    networks:
+      - app_network
+
+api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dotnet_api
+    restart: always
+    depends_on:
+      - postgres  
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+    ports: 
+      - "8080:8080"
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge         
+      
