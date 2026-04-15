@@ -12,7 +12,6 @@ Console.WriteLine($"ContentRootPath: {builder.Environment.ContentRootPath}");
 builder.Configuration.AddJsonFile("src/appsettings.json", optional: true, reloadOnChange: true);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-//   var connectionString = "Host=localhost;Port=5432;Database=meubanco;Username=meuusuario;Password=senhasegura123";
 
  Console.WriteLine($"Using connection string: {connectionString}");
 

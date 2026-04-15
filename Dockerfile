@@ -17,6 +17,7 @@ COPY --from=build /app/out .
 
 # Expõe a porta padrão
 EXPOSE 8080
+EXPOSE 5432
 
 # Executa a aplicação
 ENTRYPOINT ["dotnet", "dotnet-api.dll"]
