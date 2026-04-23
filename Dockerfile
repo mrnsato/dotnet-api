@@ -15,9 +15,12 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
 COPY --from=build /app/out .
 
+# Define variáveis de ambiente para configurar a porta
+ENV ASPNETCORE_URLS=http://+:8080
+ENV ASPNETCORE_ENVIRONMENT=Production
+
 # Expõe a porta padrão
 EXPOSE 8080
-EXPOSE 5432
 
 # Executa a aplicação
 ENTRYPOINT ["dotnet", "dotnet-api.dll"]

@@ -23,3 +23,4 @@ docker-compose.override.yml
 .terraform.lock.hcl
 
 .fake
+postgres_data/

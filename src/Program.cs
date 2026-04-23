@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Data;
 using Endpoints;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +12,25 @@ Console.WriteLine($"ContentRootPath: {builder.Environment.ContentRootPath}");
 // for o diretório do projeto. Opcional=true evita erro caso já esteja sendo carregado.
 builder.Configuration.AddJsonFile("src/appsettings.json", optional: true, reloadOnChange: true);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = Environment.GetEnvironmentVariable("MY_CONNECTION_STRING");
+if (string.IsNullOrEmpty(connectionString))
+{
+    Console.WriteLine("ERRO: A variável de ambiente 'MY_CONNECTION_STRING' não está definida.");
+    Environment.Exit(1); // Encerra o processo
+} try
+{
+    using var connection = new NpgsqlConnection(connectionString);
+    connection.Open();
+    Console.WriteLine("Conexão com o banco estabelecida com sucesso.");
+}
+catch (Exception ex)
+{
+    
+    Console.WriteLine("ERRO AO CONECTAR AO BANCO: " + ex.Message);
+    Environment.Exit(1); // Sai da aplicação
+}
 
- Console.WriteLine($"Using connection string: {connectionString}");
+Console.WriteLine($"Using connection string: {connectionString}");
 
 // Configuração do DbContext com PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -32,13 +49,48 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "http://localhost:3001")
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        var allowedOrigins = new List<string>
+        {
+            "http://localhost:3000",
+            "http://localhost:3001",
+            "http://localhost:8080",
+        };
+
+    if (builder.Environment.IsDevelopment())
+        {
+            policy.SetIsOriginAllowed(origin => 
+            {
+                // Permite qualquer localhost em desenvolvimento
+                if (origin.StartsWith("http://localhost:") || 
+                    origin.StartsWith("http://127.0.0.1:"))
+                {
+                    return true;
+                }
+                // Verifica se está na lista de origens permitidas
+                return allowedOrigins.Contains(origin);
+            });
+        }
+        else
+        {
+            // Em produção, seja mais restritivo
+            policy.WithOrigins(allowedOrigins.ToArray())
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        }
     });
 });
 
+// Configurar Kestrel para escutar apenas HTTP
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(8080); // HTTP apenas
+});
+
+
 var app = builder.Build();
+
+// CORS deve vir ANTES de UseHttpsRedirection para requisições preflight funcionarem corretamente
+app.UseCors("AllowFrontend");
 
 // Configurar o pipeline HTTP
 if (app.Environment.IsDevelopment())
@@ -46,9 +98,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();       // Serve generated Swagger as JSON
     app.UseSwaggerUI();     // Interface Swagger UI em /swagger
 }
-
-// CORS deve vir ANTES de UseHttpsRedirection para requisições preflight funcionarem corretamente
-app.UseCors("AllowFrontend");
 
 // UseHttpsRedirection apenas em produção para evitar conflitos com CORS em desenvolvimento
 if (!app.Environment.IsDevelopment())

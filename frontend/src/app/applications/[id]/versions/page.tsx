@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useVersions } from '@/hooks/useVersions';
-import { useApplicationVersions } from '@/hooks/useApplicationVersions';
 import { applicationVersionService } from '@/services/applicationVersionService';
 import { ApplicationVersionsTable } from '@/components/tables/ApplicationVersionsTable';
 import { Loading } from '@/components/common/Loading';
