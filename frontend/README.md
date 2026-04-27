@@ -6,7 +6,7 @@ Um frontend moderno em **Next.js** para gerenciar Tecnologias, Versões e Aplica
 
 ### Pré-requisitos
 - Node.js 18+ instalado
-- API .NET rodando em `http://localhost:5000`
+- API .NET rodando em `http://localhost:8080`
 
 ### Instalação
 
@@ -87,7 +87,7 @@ src/
 ## 🎨 Variáveis de Ambiente
 
 ```env
-NEXT_PUBLIC_API_BASE_URL=http://localhost:5000
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
 ```
 
 ## 🧪 Testando os Endpoints
@@ -110,7 +110,7 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:5000
 ## 🚨 Troubleshooting
 
 ### Erro de conexão com API
-- Verifique se a API .NET está rodando em `http://localhost:5000`
+- Verifique se a API .NET está rodando em `http://localhost:8080`
 - Verifique CORS no backend
 
 ### Porta 3000 já em uso

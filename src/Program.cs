@@ -80,12 +80,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Configurar Kestrel para escutar apenas HTTP
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP(8080); // HTTP apenas
-});
-
 
 var app = builder.Build();
 

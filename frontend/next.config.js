@@ -1,15 +1,3 @@
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {
-//   reactStrictMode: true,
-//   swcMinify: true,
-//   env: {
-//     NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000',
-//   },
-// };
-
-// module.exports = nextConfig;
-
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // ⚠️ IMPORTANTE: Habilitar standalone
@@ -17,7 +5,7 @@ const nextConfig = {
   
   // Configuração da API
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api',
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://dotnet_api:8080/api',
   },
 
   // Desabilitar telemetria
@@ -26,4 +14,5 @@ const nextConfig = {
   },
 };
 
+console.log('Configuração do Next.js:', process.env.NEXT_PUBLIC_API_URL);
 module.exports = nextConfig;
