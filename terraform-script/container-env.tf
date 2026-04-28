@@ -23,6 +23,19 @@ resource "azurerm_container_app" "apimanager" {
     value = azurerm_container_registry.apimanager.admin_password
   }
 
+  # Adicionar timeouts
+  timeouts {
+    create = "60m"
+    update = "60m"
+    read   = "10m"
+    delete = "60m"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
   template {
     container {
       name   = "api-manager-container"

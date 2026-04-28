@@ -17,10 +17,25 @@ docker-compose.override.yml
 
 
 # Terraform
-.terraform/
 *.tfstate
 *.tfstate.*
+*.tfvars
+.terraform/
 .terraform.lock.hcl
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Sensitive files
+terraform.tfvars
+secrets.tfvars
+*.backup
+
+# OS files
+.DS_Store
+Thumbs.db
 
 .fake
 postgres_data/
