@@ -1,41 +1,58 @@
-# Ignorar dados do Postgres
+# Criar .dockerignore
+cat > .dockerignore << 'EOF'
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile
+docker-compose.yml
+docker-compose.*.yml
+.dockerignore
+
+# Dados locais do PostgreSQL
 postgres_data/
+**/postgres_data
 
-# Ignorar arquivos de log
-*.log
+# Node modules
+node_modules/
+**/node_modules
 
-# Ignorar arquivos do .env
-.env
+# Build artifacts
+bin/
+obj/
+out/
+build/
+dist/
+target/
 
-# Ignorar arquivos temporários
-*.tmp
+# IDE
+.vscode/
+.idea/
 *.swp
+*.swo
+*~
+.DS_Store
 
-# Ignorar arquivos do Docker
-docker-compose.override.yml
+# Logs
+*.log
+logs/
+
+# Environment files
 .env
-
+.env.local
+.env.*.local
+*.env
 
 # Terraform
+terraform/
 *.tfstate
 *.tfstate.*
-*.tfvars
 .terraform/
-.terraform.lock.hcl
-crash.log
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
 
-# Sensitive files
-terraform.tfvars
-secrets.tfvars
-*.backup
-
-# OS files
-.DS_Store
-Thumbs.db
-
-.fake
-postgres_data/
+# Outros
+*.md
+LICENSE
+README.md
+.editorconfig
