@@ -99,12 +99,12 @@ CREATE TABLE ApplicationVersions (
 ```
 Technologies:
 ├── 1: dotnet
-├── 2: vakinha
+├── 2: jira
 └── 3: python
 
 Versions:
 ├── 1: .NET 10.0.100 (Standard, EOS: 01/01/2026, EOL: 01/01/2026)
-└── 2: vakinha yes
+└── 2: jira yes
 
 Applications:
 ├── 1: App 1 (Active: true)
@@ -137,7 +137,7 @@ Edite `src/appsettings.json`:
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Port=5432;Database=meubanco;Username=meuusuario;Password=senhasegura123"
+    "DefaultConnection": "Host=localhost;Port=5432;Database=meubanco;Username=criarusuario;Password=criarSuaSenha"
   }
 }
 ```
@@ -361,8 +361,8 @@ services:
   postgres:
     image: postgres:18
     environment:
-      POSTGRES_USER: meuusuario
-      POSTGRES_PASSWORD: senhasegura123
+      POSTGRES_USER: criarusuario
+      POSTGRES_PASSWORD: criarSuaSenha
       POSTGRES_DB: meubanco
     ports:
       - "5432:5432"
@@ -374,7 +374,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=meubanco;Username=meuusuario;Password=senhasegura123"
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=meubanco;Username=criarusuario;Password=criarSuaSenha"
     depends_on:
       - postgres
 
@@ -477,8 +477,8 @@ psql -U meuusuario -d meubanco
 
 # Ou use Docker
 docker run -d -p 5432:5432 \
-  -e POSTGRES_USER=meuusuario \
-  -e POSTGRES_PASSWORD=senhasegura123 \
+  -e POSTGRES_USER=criarusuario \
+  -e POSTGRES_PASSWORD=criarSuaSenha \
   -e POSTGRES_DB=meubanco \
   postgres:18
 ```
